@@ -1,7 +1,18 @@
 import React from 'react';
-import './App.css';
 import {Button, InputGroup, FormControl} from 'react-bootstrap';
 import Products from './products/products'
+import styled from 'styled-components';
+import Menu from './Menu/menu'
+
+const AppContainer = styled.div`
+  text-align: center;
+`
+
+const Div = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+`
+
 
 class App extends React.Component {
   constructor(props) {
@@ -13,6 +24,7 @@ class App extends React.Component {
     }
     this.searchBtn = this.searchBtn.bind(this);
     this.searchInputChange = this.searchInputChange.bind(this);
+    this.categorySelect = this.categorySelect.bind(this);
   }
   componentWillMount() {
     fetch('https://demo8421975.mockable.io/products')
@@ -34,9 +46,16 @@ class App extends React.Component {
       filteredProducts
     })
   }
+  categorySelect(e){
+    console.log(e.target.dataset.category);
+    const filteredProducts = this.state.products.filter(item => item.bsr_category.search(e.target.dataset.category) !== -1);
+    this.setState({
+      filteredProducts
+    })
+  }
   render() {
     return (
-      <div className="App col-lg-12">
+      <AppContainer className="col-lg-12">
         <InputGroup className="mb-3">
           <FormControl
             onChange={this.searchInputChange} 
@@ -45,13 +64,17 @@ class App extends React.Component {
             <Button variant="outline-secondary" onClick={this.searchBtn}>Search</Button>
           </InputGroup.Append> 
         </InputGroup>
+      <Div>
+
+        <Menu categorySelect={this.categorySelect}/>
 
         {this.state.filteredProducts ?
           <Products products={this.state.filteredProducts} />
           :
           <Products products={this.state.products} />
         }
-      </div>
+      </Div>
+      </AppContainer>
     );
   }
 

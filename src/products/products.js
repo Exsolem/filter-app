@@ -11,11 +11,15 @@ const Li = styled.ul`
     align-items: center;
     border-bottom: 1px solid black;
 `
+const Img = styled.img`
+    max-width: 30vw;
+    max-heigth: 30vh;
+`
 const Products = (props) => {
-    return <ul className='col-lg-12'>
+    return <ul className='col-lg-9'>
         {props.products
     .map(product => <Li>
-        <img src={product.img} alt="product" className='col-lg-3'/>
+        <Img src={product.img} alt="product" className='col-lg-3'/>
         <Span className='col-lg-3'>{product.price} GBP</Span>
         <Span className='col-lg-3'>{product.name}</Span>
     </Li>)}
