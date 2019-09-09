@@ -2,7 +2,8 @@
     text-align: center;
 }
 
-img {
+
+/* img {
     max-width: 30vmin;
     max-height: 30vh;
 }
@@ -13,9 +14,11 @@ ul>li {
     justify-content: center;
     align-items: center;
     width: 90vw;
+    margin: 5vmin;
+    border-bottom: 1px solid black;
 }
 
 li>span {
     width: 20vw;
     font-size: 3vmin;
-}
+} */

@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import {Button, InputGroup, FormControl} from 'react-bootstrap';
 import Products from './products/products'
 
 class App extends React.Component {
@@ -13,28 +14,21 @@ class App extends React.Component {
     this.searchBtn = this.searchBtn.bind(this);
     this.searchInputChange = this.searchInputChange.bind(this);
   }
-  componentWillMount(){
-    const request = new XMLHttpRequest();
-    request.open(
-      'GET',
-      'https://demo8421975.mockable.io/products',
-      true);
-    request.send();
-    request.onreadystatechange = () => {
-      if (request.readyState === 4 && request.status === 200) {
-        const response = JSON.parse(request.response).products;
+  componentWillMount() {
+    fetch('https://demo8421975.mockable.io/products')
+      .then(data => data.json()).then(data => {
+        let products = data.products;
         this.setState({
-          products: response
+          products
         })
-      }
-    }
+      })
   }
-  searchInputChange(e){
+  searchInputChange(e) {
     this.setState({
       searchInput: e.target.value.toLowerCase()
     })
   }
-  searchBtn(){
+  searchBtn() {
     const filteredProducts = this.state.products.filter(item => item.name.toLowerCase().search(this.state.searchInput) !== -1);
     this.setState({
       filteredProducts
@@ -42,14 +36,21 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className="App">
-        <input type="text" onChange={this.searchInputChange}/>
-        <button onClick={this.searchBtn}>search</button>
-          {this.state.filteredProducts? 
-          <Products products={this.state.filteredProducts}/>
+      <div className="App col-lg-12">
+        <InputGroup className="mb-3">
+          <FormControl
+            onChange={this.searchInputChange} 
+          />
+          <InputGroup.Append>
+            <Button variant="outline-secondary" onClick={this.searchBtn}>Search</Button>
+          </InputGroup.Append> 
+        </InputGroup>
+
+        {this.state.filteredProducts ?
+          <Products products={this.state.filteredProducts} />
           :
-          <Products products={this.state.products}/>
-          }
+          <Products products={this.state.products} />
+        }
       </div>
     );
   }
