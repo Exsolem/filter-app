@@ -28,7 +28,6 @@ class App extends React.Component {
         })
       }
     }
-    console.log(this.state.products);
   }
   searchInputChange(e){
     this.setState({
@@ -40,7 +39,6 @@ class App extends React.Component {
     this.setState({
       filteredProducts
     })
-    console.log(filteredProducts)
   }
   render() {
     return (
