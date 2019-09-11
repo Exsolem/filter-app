@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from 'styled-components';
 
 const Li = styled.li`
@@ -7,21 +7,25 @@ const Li = styled.li`
   border: 1px solid black;
   width: 20vw;
   list-style-type: none;
-  font-size: 2vmin;
+  font-size: 2.5vmin;
   color: black;
   &:hover {
     background-color: lightgrey;
     text-decoration: none;
   }
 `
-
 const CategoriesList = (props) =>{
-
-    return <Link to={`/${props.category}/`}
-      key={props.index}>
+const category = props.category.split('_').join(' ');
+    return <NavLink 
+              to={`/${props.category}/`}
+              key={props.index}
+              activeStyle={{
+                backgroundColor: "lightgrey"
+              }}
+              >
       <Li>
-      {props.category}
+      {category}
       </Li>
-    </Link>
+    </NavLink>
 }
 export default CategoriesList;

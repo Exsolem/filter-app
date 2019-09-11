@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 const Span = styled.span`
-    font-size: 3vmin;   
+    font-size: 2.5vmin;   
 `
 const Li = styled.ul`
     display: flex;
@@ -12,8 +12,8 @@ const Li = styled.ul`
     border-bottom: 1px solid black;
 `
 const Img = styled.img`
-    max-width: 30vw;
-    max-heigth: 30vh;
+    max-width: 25vw;
+    max-heigth: 25vh;
 `
 const Product = (props) =>{
 

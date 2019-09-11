@@ -2,7 +2,6 @@ import React from 'react';
 import Product from './product/product';
 
 
-
 const Products = ({ match,...props }) => {
     let products;
     const category = match.params.category.split('_').join(' ');
@@ -10,7 +9,7 @@ const Products = ({ match,...props }) => {
     if(filteredProducts.length !== 0){
         products = filteredProducts
             .map((product,index) => <Product key={index} index={index} product={product} />);
-    }else if(category==='Home Page'){
+    }else if(category==='All Products'){
         products = props.products.map((product,index) => <Product key={index} index={index} product={product} />);
     }
     else{
@@ -19,7 +18,7 @@ const Products = ({ match,...props }) => {
     }
 
     return <ul className='col-lg-9'>
-        {products}
-</ul>
-}
+                {products}
+            </ul>
+    }
 export default Products;

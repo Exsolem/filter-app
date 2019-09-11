@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Products from './products/products';
 import CategoriesList from './CategoriesList/categoriesList';
 
@@ -23,7 +23,8 @@ const MyMenu = styled.menu`
   font-size: 3vmin;
   cursor: pointer;
   padding: 0;
-  
+  margin: 0;
+  height:15vh;
 `
 
 class App extends React.Component {
@@ -31,16 +32,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       products: [],
-      filteredProducts: null,
       searchInput: '',
-      category: ['Home_Page','Baby_Products', 'Home_&_Kitchen', 'Health_&_Personal_Care', 'Sports_&_Outdoors']
+      category: ['All_Products', 'Baby_Products', 'Home_&_Kitchen', 'Health_&_Personal_Care', 'Sports_&_Outdoors']
     }
     this.searchBtn = this.searchBtn.bind(this);
     this.searchInputChange = this.searchInputChange.bind(this);
-    this.categorySelect = this.categorySelect.bind(this);
   }
   componentDidMount() {
-    (async () =>{
+    (async () => {
       const request = await fetch('https://demo8421975.mockable.io/products');
       const data = await request.json();
 
@@ -60,38 +59,30 @@ class App extends React.Component {
       filteredProducts
     })
   }
-  categorySelect(e, category){
-    const filteredProducts = this.state.products.filter(item => item.bsr_category.search(category) !== -1);
-    this.setState({
-      filteredProducts
-    })
-  }
   render() {
     const list = this.state.category.map((category, index) => {
-      return <CategoriesList index = { index } key={ index } category={ category }/>
+      return <CategoriesList index={index} key={index} category={category} />
     })
     return (
       <AppContainer className="col-lg-12">
         <Router>
-        <InputGroup className="mb-3">
-          <FormControl
-            onChange={this.searchInputChange} 
-          />
-          <InputGroup.Append>
-          <Link to={`/${this.state.searchInput}`}>
-            <Button variant="outline-secondary" onClick={this.searchBtn}>Search</Button>
-          </Link>
-          </InputGroup.Append> 
-        
-        
-        </InputGroup>
-      <Div>
-        <MyMenu>
-            {list}
-        </MyMenu>
-          <Route path='/:category' render ={ props => <Products {...props} products={this.state.products} />} />
-      </Div>
-      </Router>
+          <InputGroup className="mb-3">
+            <FormControl
+              onChange={ this.searchInputChange }
+            />
+            <InputGroup.Append>
+              <Link to={`/${this.state.searchInput}`}>
+                <Button variant="outline-secondary" onClick={ this.searchBtn }>Search</Button>
+              </Link>
+            </InputGroup.Append>
+          </InputGroup>
+          <Div>
+            <MyMenu>
+              {list}
+            </MyMenu>
+            <Route path='/:category' render={props => <Products { ...props } products={ this.state.products } />} />
+          </Div>
+        </Router>
       </AppContainer>
     );
   }
