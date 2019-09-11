@@ -1,8 +1,9 @@
 import React from 'react';
-import {Button, InputGroup, FormControl} from 'react-bootstrap';
-import Products from './products/products'
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
-import Menu from './Menu/menu'
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import Products from './products/products';
+import CategoriesList from './CategoriesList/categoriesList';
 
 const AppContainer = styled.div`
   text-align: center;
@@ -12,7 +13,18 @@ const Div = styled.div`
   display: flex;
   flex-flow: row nowrap;
 `
-
+const MyMenu = styled.menu`
+  display: flex;
+  flex-flow: column nowrap;
+  text-align:left;
+  align-items: flex-start;
+  height: auto;
+  width: 20vw;
+  font-size: 3vmin;
+  cursor: pointer;
+  padding: 0;
+  
+`
 
 class App extends React.Component {
   constructor(props) {
@@ -20,24 +32,26 @@ class App extends React.Component {
     this.state = {
       products: [],
       filteredProducts: null,
-      searchInput: ''
+      searchInput: '',
+      category: ['Home_Page','Baby_Products', 'Home_&_Kitchen', 'Health_&_Personal_Care', 'Sports_&_Outdoors']
     }
     this.searchBtn = this.searchBtn.bind(this);
     this.searchInputChange = this.searchInputChange.bind(this);
     this.categorySelect = this.categorySelect.bind(this);
   }
-  componentWillMount() {
-    fetch('https://demo8421975.mockable.io/products')
-      .then(data => data.json()).then(data => {
-        let products = data.products;
-        this.setState({
-          products
-        })
+  componentDidMount() {
+    (async () =>{
+      const request = await fetch('https://demo8421975.mockable.io/products');
+      const data = await request.json();
+
+      this.setState({
+        products: data.products
       })
+    })();
   }
   searchInputChange(e) {
     this.setState({
-      searchInput: e.target.value.toLowerCase()
+      searchInput: e.target.value.split(' ').join('_')
     })
   }
   searchBtn() {
@@ -46,34 +60,38 @@ class App extends React.Component {
       filteredProducts
     })
   }
-  categorySelect(e){
-    console.log(e.target.dataset.category);
-    const filteredProducts = this.state.products.filter(item => item.bsr_category.search(e.target.dataset.category) !== -1);
+  categorySelect(e, category){
+    const filteredProducts = this.state.products.filter(item => item.bsr_category.search(category) !== -1);
     this.setState({
       filteredProducts
     })
   }
   render() {
+    const list = this.state.category.map((category, index) => {
+      return <CategoriesList index = { index } key={ index } category={ category }/>
+    })
     return (
       <AppContainer className="col-lg-12">
+        <Router>
         <InputGroup className="mb-3">
           <FormControl
             onChange={this.searchInputChange} 
           />
           <InputGroup.Append>
+          <Link to={`/${this.state.searchInput}`}>
             <Button variant="outline-secondary" onClick={this.searchBtn}>Search</Button>
+          </Link>
           </InputGroup.Append> 
+        
+        
         </InputGroup>
       <Div>
-
-        <Menu categorySelect={this.categorySelect}/>
-
-        {this.state.filteredProducts ?
-          <Products products={this.state.filteredProducts} />
-          :
-          <Products products={this.state.products} />
-        }
+        <MyMenu>
+            {list}
+        </MyMenu>
+          <Route path='/:category' render ={ props => <Products {...props} products={this.state.products} />} />
       </Div>
+      </Router>
       </AppContainer>
     );
   }

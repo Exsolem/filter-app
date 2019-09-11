@@ -1,28 +1,25 @@
 import React from 'react';
-import styled from 'styled-components'
+import Product from './product/product';
 
-const Span = styled.span`
-    font-size: 3vmin;   
-`
-const Li = styled.ul`
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid black;
-`
-const Img = styled.img`
-    max-width: 30vw;
-    max-heigth: 30vh;
-`
-const Products = (props) => {
+
+
+const Products = ({ match,...props }) => {
+    let products;
+    const category = match.params.category.split('_').join(' ');
+    const filteredProducts = props.products.filter(item => item.bsr_category.search(category) !== -1);
+    if(filteredProducts.length !== 0){
+        products = filteredProducts
+            .map((product,index) => <Product key={index} index={index} product={product} />);
+    }else if(category==='Home Page'){
+        products = props.products.map((product,index) => <Product key={index} index={index} product={product} />);
+    }
+    else{
+        const searchedProducts = props.products.filter(item => item.name.toLowerCase().search(category.trim().toLowerCase()) !== -1);
+        products = searchedProducts.map((product,index) => <Product key={index} index={index} product={product} />);
+    }
+
     return <ul className='col-lg-9'>
-        {props.products
-    .map(product => <Li>
-        <Img src={product.img} alt="product" className='col-lg-3'/>
-        <Span className='col-lg-3'>{product.price} GBP</Span>
-        <Span className='col-lg-3'>{product.name}</Span>
-    </Li>)}
-    </ul>
+        {products}
+</ul>
 }
 export default Products;
