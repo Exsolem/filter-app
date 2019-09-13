@@ -14,18 +14,21 @@ const Li = styled.li`
     text-decoration: none;
   }
 `
-const CategoriesList = (props) =>{
-const category = props.category.split('_').join(' ');
-    return <NavLink 
-              to={`/${props.category}/`}
-              key={props.index}
-              activeStyle={{
-                backgroundColor: "lightgrey"
-              }}
-              >
-      <Li>
+
+const CategoriesList = (props) => {
+  const category = props.category.replace(/_/g, ' ');
+
+  return (
+  <NavLink
+    to={props.category}
+    key={props.index}
+    activeStyle={{
+      backgroundColor: "lightgrey"
+    }}
+  >
+    <Li>
       {category}
-      </Li>
-    </NavLink>
+    </Li>
+  </NavLink>)
 }
 export default CategoriesList;

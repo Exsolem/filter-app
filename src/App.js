@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Products from './products/products';
 import CategoriesList from './CategoriesList/categoriesList';
 
@@ -32,11 +31,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       products: [],
-      searchInput: '',
       category: ['All_Products', 'Baby_Products', 'Home_&_Kitchen', 'Health_&_Personal_Care', 'Sports_&_Outdoors']
     }
-    this.searchBtn = this.searchBtn.bind(this);
-    this.searchInputChange = this.searchInputChange.bind(this);
   }
   componentDidMount() {
     (async () => {
@@ -48,39 +44,18 @@ class App extends React.Component {
       })
     })();
   }
-  searchInputChange(e) {
-    this.setState({
-      searchInput: e.target.value.split(' ').join('_')
-    })
-  }
-  searchBtn() {
-    const filteredProducts = this.state.products.filter(item => item.name.toLowerCase().search(this.state.searchInput) !== -1);
-    this.setState({
-      filteredProducts
-    })
-  }
   render() {
     const list = this.state.category.map((category, index) => {
-      return <CategoriesList index={index} key={index} category={category} />
+      return <CategoriesList index={ index } key={ index } category={ category }  search = { this.state.searchInput }/>
     })
     return (
       <AppContainer className="col-lg-12">
         <Router>
-          <InputGroup className="mb-3">
-            <FormControl
-              onChange={ this.searchInputChange }
-            />
-            <InputGroup.Append>
-              <Link to={`/${this.state.searchInput}`}>
-                <Button variant="outline-secondary" onClick={ this.searchBtn }>Search</Button>
-              </Link>
-            </InputGroup.Append>
-          </InputGroup>
           <Div>
             <MyMenu>
               {list}
             </MyMenu>
-            <Route path='/:category' render={props => <Products { ...props } products={ this.state.products } />} />
+              <Route path='/' render={props => <Products { ...props } products={ this.state.products } location={this.state.searchInput}/>} />
           </Div>
         </Router>
       </AppContainer>
