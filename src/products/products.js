@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Product from './product/product';
 import queryString from 'query-string';
 import { InputGroup, FormControl } from 'react-bootstrap';
@@ -8,7 +8,15 @@ const Div = styled.div`
     display: flex;
     flex-flow: column nowrap;
 `
+const Ul = styled.ul`
+    margin: 0;
+    padding:0;
+`
 const Products = ({ match, ...props }) => {
+
+    useEffect(() => {
+            console.log('lol')
+    }, [])
 
     const searched = queryString.parse(props.history.location.search);
     let products;
@@ -41,20 +49,24 @@ const Products = ({ match, ...props }) => {
     }
     const inputHandler = (e) => {
         if(e.target.value){
-            props.history.push(`/${category}?search=${e.target.value}`);
+            props.history.push(`${props.history.location.pathname}?search=${e.target.value}`);
         } 
        else{
-        props.history.push(`/${category.replace(/ /g, '_')}`);
+        props.history.push(`${props.history.location.pathname}`);
        }
         
     }
     return <Div className='col-md-9'>
-        <InputGroup className="mb-12">
+        <InputGroup className="mb-12"
+        style={{
+            margin: '2vmin 0' ,
+            padding: 0
+        }}>
             <FormControl onChange={inputHandler}/>
         </InputGroup>
-        <ul className='col-md-12'>
+        <Ul className='col-md-12'>
             {products}
-        </ul>
+        </Ul>
     </Div>
 }
 export default Products;

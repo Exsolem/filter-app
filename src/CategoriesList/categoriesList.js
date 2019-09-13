@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import styled from 'styled-components';
 
 const Li = styled.li`
@@ -14,16 +14,18 @@ const Li = styled.li`
     text-decoration: none;
   }
 `
-
-const CategoriesList = (props) => {
-  const category = props.category.replace(/_/g, ' ');
+const CategoriesList = ({category, index, location: {search}}) => {
+  const filteredCategory = category.replace(/_/g, ' ');
 
   return (
   <NavLink
-    to={props.category}
-    key={props.index}
+    to={{
+      pathname:`/${filteredCategory}`,
+      search:`${search}`,
+    }}
+    key={index}
     activeStyle={{
-      backgroundColor: "lightgrey"
+      backgroundColor: "lightgrey",
     }}
   >
     <Li>
@@ -31,4 +33,4 @@ const CategoriesList = (props) => {
     </Li>
   </NavLink>)
 }
-export default CategoriesList;
+export default withRouter(CategoriesList);
