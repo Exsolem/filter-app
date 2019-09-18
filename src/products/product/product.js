@@ -1,27 +1,38 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Container, Row, Col } from 'react-bootstrap'
 
 const Span = styled.span`
     font-size: 2.5vmin;   
+    color: black;
 `
-const Li = styled.ul`
+const Li = styled.li`
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    border: 0.1vmin solid black;
+    box-shadow: 0px 0px 0.5vmin 0.1vmin black;
     min-heigth: 30vh;
+    padding: 1vmin  0;
+    margin-bottom: 1vmin;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 2vmin;
 `
 const Img = styled.img`
-    max-width: 25vw;
-    max-heigth: 25vh;
+    max-width: 25vmin;  
 `
-const Product = (props) =>{
+const Product = (props) => {
 
-    return <Li key={props.index}>
-    <Img src={props.product.img} alt="product" className='col-md-4'/>
-    <Span className='col-md-4'>{props.product.price} GBP</Span>
-    <Span className='col-md-4'>{props.product.name}</Span>
-</Li>
+    return <Container style = {{margin:0, padding:0}}>
+        <Row>
+            <Col>
+                <Li key={props.index}>
+                    <Col md={4}><Img src={props.product.img} alt="product" /></Col>
+                    <Col md={2} > <Span >{props.product.price} GBP</Span></Col>
+                    <Col md={6}> <Span>{props.product.name}</Span></Col>
+                </Li>
+            </Col>
+        </Row>
+    </Container>
 }
-export default  Product;
+export default Product;
