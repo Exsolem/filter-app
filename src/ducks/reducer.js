@@ -1,18 +1,18 @@
-import { 
-    REQUESTED_PRODUCTS, 
-    LOADING_PRODUCTS, 
-    ERROR_OCCURED, 
-    GET_FILTERED_PRODUCTS, 
-    GET_CATEGORIES, 
-    GET_SEARCH_VALUE, 
+import {
+    REQUESTED_PRODUCTS,
+    LOADING_PRODUCTS,
+    ERROR_OCCURRED,
+    GET_FILTERED_PRODUCTS,
+    GET_CATEGORIES,
+    GET_SEARCH_VALUE,
     GET_SEARCHED_PRODUCTS,
     GET_CURRENT_CATEGORY
- } from './actions'
+} from './actions'
 
 const initialState = {
     isLoading: false,
     loadSuccess: false,
-    errorOccured: false,
+    errorOccurred: false,
     products: [],
     filteredProducts: [],
     searchedProducts:[],
@@ -34,12 +34,12 @@ const  reducer = (state = initialState, action) => {
                 loadSuccess: true,
                 isLoading: false
             };
-        }   
-        case ERROR_OCCURED: 
+        }
+        case ERROR_OCCURRED:
             return {
                 ...state,
                 isLoading: false,
-                errorOccured: true
+                errorOccurred: true
             }
         case GET_CATEGORIES: {
             let  categories = [];
@@ -49,39 +49,39 @@ const  reducer = (state = initialState, action) => {
                 }
             })
             return {...state, categories};
-            
+
         }
         case GET_FILTERED_PRODUCTS: {
             const filteredProducts = [...state.products]
                 .filter(item => item.bsr_category === state.currentCategory)
 
-            console.log(filteredProducts)
             return {...state,
                 filteredProducts,
             }
         }
         case GET_SEARCH_VALUE:{
-                return { ...state, search: action.payload.toLowerCase() }
+            return { ...state, search: action.payload.toLowerCase() }
         }
         case GET_CURRENT_CATEGORY:{
-            const currentCategory = action.payload.replace('/', '')
+            const currentCategory = action.payload.replace('/', '');
             return { ...state, currentCategory }
         }
         case GET_SEARCHED_PRODUCTS: {
             let searchedProducts = [];
             if(state.currentCategory){
-                state.filteredProducts.map( product => {
+                [...state.filteredProducts].forEach( product => {
                     const name = product.name.toLowerCase();
-                    const search = state.search.toLowerCase();
+                    console.log(state.search);
+                    const search = state.search;
                     if(name.indexOf(search) >= 0){
                         searchedProducts.push(product)
                     }
                 })
             }
             else{
-                state.products.map( product => {
+                [...state.products].forEach( product => {
                     const name = product.name.toLowerCase();
-                    const search = state.search.toLowerCase();
+                    const search = state.search.toLowerCase() ;
                     if(name.indexOf(search) >= 0){
                         searchedProducts.push(product)
                     }
@@ -97,4 +97,3 @@ const  reducer = (state = initialState, action) => {
     }
 };
 export default reducer;
-

@@ -1,6 +1,6 @@
 import App from './App';
 import { connect } from 'react-redux'
-import { mapDispatchToProps, mapStateToProps } from './store/index'
+import { mapDispatchToProps, mapStateToProps } from './ducks/index'
 
 
 const AppContainer = connect(

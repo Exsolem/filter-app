@@ -1,9 +1,10 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
 
+
 export const REQUESTED_PRODUCTS  = 'REQUESTED_PRODUCTS';
 export const FETCHED_PRODUCTS = 'FETCHED_PRODUCTS';
 export const LOADING_PRODUCTS = 'LOADING_PRODUCTS';
-export const ERROR_OCCURED = 'ERROR_OCCURED';
+export const ERROR_OCCURRED = 'ERROR_OCCURRED';
 export const GET_FILTERED_PRODUCTS = 'GET_FILTERED_PRODUCTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_SEARCH_VALUE = 'GET_SEARCH_VALUE';
@@ -18,15 +19,15 @@ export const requestProducts = ( data ) => {
 export const fetchProducts = () => {
     return { type: FETCHED_PRODUCTS }
 };
-export const lodingProducts = () => {
+export const loadingProducts = () => {
     return { type: LOADING_PRODUCTS }
 }
-export const errorOccured = () => {
-    return { type: ERROR_OCCURED }
+export const errorOccurred = () => {
+    return { type: ERROR_OCCURRED }
 }
 export const getFilteredProducts = (category) => {
     return {
-        type: GET_FILTERED_PRODUCTS, 
+        type: GET_FILTERED_PRODUCTS,
         payload:category
     }
 }
@@ -34,21 +35,21 @@ export const getCategories = () => {
     return { type: GET_CATEGORIES }
 }
 export const getSearchValue = (searchValue) => {
-    return { 
+    return {
         type: GET_SEARCH_VALUE,
         payload: searchValue
-     }
+    }
 }
 export const getSearchedProducts = () => {
     return { type: GET_SEARCHED_PRODUCTS}
 }
 export const getCurrentCategory = (category) => {
-    return { 
+    return {
         type: GET_CURRENT_CATEGORY,
         payload: category
-     }
-       
-}
+    }
+
+};
 
 // Sagas
 export function* watchFetchProducts() {
@@ -57,15 +58,15 @@ export function* watchFetchProducts() {
 
 export function* fetchProductsAsync() {
     try {
-        yield put( lodingProducts() )
+        yield put( loadingProducts() )
         const data = yield call(() => {
-            return fetch('https://demo8421975.mockable.io/products')
-                .then(res => res.json());
-        }
+                return fetch('../products.json')
+                    .then(res => res.json());
+            }
         );
         yield put(requestProducts(data));
         yield put(getCategories())
     }catch(error){
-        yield put(errorOccured()) 
+        yield put(errorOccurred())
     }
 }

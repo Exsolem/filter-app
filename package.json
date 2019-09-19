@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "prop-types": "^15.7.2",
     "query-string": "^6.8.3",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
@@ -12,7 +13,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "redux": "^4.0.4",
-    "redux-saga": "^1.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-saga": "^1.1.1",
     "styled-components": "^4.3.2",
     "uuid": "^3.3.3"
   },
