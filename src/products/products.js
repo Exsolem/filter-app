@@ -30,7 +30,14 @@ const Products = ({searchedProducts, getCurrentCategory, search, filteredProduct
 };
 
 Products.propTypes = {
-
+    searchedProducts: PropTypes.array,
+    filteredProducts: PropTypes.array,
+    products: PropTypes.array,
+    getCurrentCategory: PropTypes.func,
+    getSearchedProducts: PropTypes.func,
+    getSearchValue: PropTypes.func,
+    search: PropTypes.string,
+    pathname:PropTypes.string
 };
 export default Products;
 

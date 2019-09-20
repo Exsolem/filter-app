@@ -1,19 +1,19 @@
 import React from 'react'
 import {FormControl, InputGroup} from "react-bootstrap";
 import {withRouter} from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 
-const Search = ({ ...props}) => {
+const Search = ({getSearchValue, getSearchedProducts, history:{push, location:{pathname}}}) => {
     const inputHandler = (e) => {
-        const input = e.target.value
-        props.getSearchValue(input);
-        console.log(e.target.value);
-        props.getSearchedProducts();
+        const input = e.target.value.toLowerCase();
+        getSearchValue(input);
+        getSearchedProducts();
 
         if (e.target.value) {
-            props.history.push(`${props.history.location.pathname}?search=${e.target.value} `);
+            push(`${pathname}?search=${e.target.value} `);
         } else {
-            props.history.push(`${props.history.location.pathname}`)
+            push(`${pathname}`)
         }
     };
 
@@ -22,8 +22,13 @@ const Search = ({ ...props}) => {
                            margin: '2vmin 0',
                            padding: 0
                        }}>
-        <FormControl onChange={inputHandler} value={props.search}/>
+        <FormControl onInput={inputHandler} />
     </InputGroup>
 };
-
-export default withRouter(Search)
+Search.propTypes = {
+    pathname: PropTypes.string,
+    getSearchValue: PropTypes.func,
+    getSearchedProducts: PropTypes.func,
+    push: PropTypes.func
+};
+export default withRouter(Search);
