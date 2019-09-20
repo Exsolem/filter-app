@@ -1,25 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ConnectedApp from './AppContainer';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
-import {reducer, mapDispatchToProps, mapStateToProps, watchFetchProducts} from './ducks/products'
+import {reducer, watchFetchProducts} from './ducks/products'
 import {createStore, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import {composeWithDevTools} from "redux-devtools-extension";
 
 // Action Creators
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
     reducer,
-    applyMiddleware(sagaMiddleware)
+    composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 sagaMiddleware.run(watchFetchProducts);
 
 ReactDOM.render(
     <Provider store={store} >
-        <ConnectedApp />
+        <App />
     </Provider>,
     document.getElementById('root'));
 

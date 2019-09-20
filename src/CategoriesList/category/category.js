@@ -1,34 +1,29 @@
 import React from 'react';
-import { NavLink, withRouter } from "react-router-dom";
-import styled from 'styled-components';
+import { NavLink } from "react-router-dom";
 import uuid from 'uuid'
 import queryString from 'query-string'
 import { CategoryLi} from '../../styled/styledComponents'
+import PropTypes from 'prop-types'
+import slugify from "slugify";
 
 
-const Category = (props) => {
+const Category = ({category, getCurrentCategory,getFilteredProducts, getSearchedProducts,getSearchValue, search }) => {
+   const slugCategory = slugify(category.toLowerCase());
   const getProducts = () => {
-    props.getCurrentCategory(props.category);
-    props.getFilteredProducts();
-    props.getSearchedProducts();
+    getCurrentCategory(slugCategory);
+    getFilteredProducts();
+    getSearchedProducts();
   }
-  if (props.search.length > 0) {
-    let newSearch = queryString.parse(props.search);
-    props.getSearchValue(newSearch.search);
-  }
-  const searchedProducts = () => {
-    if (props.search.length > 0) {
-      let newSearch = queryString.parse(props.search); 
-      props.getSearchValue(newSearch.search);
-    }
-    props.getSearchedProducts();
+  if (search.length > 0) {
+    let newSearch = queryString.parse(search);
+    getSearchValue(newSearch.search);
   }
 
   return (
     <NavLink
       to={{
-        pathname: `/${props.category}`,
-        search: `${props.search}`,
+        pathname: `/${slugCategory}`,
+        search: `${search}`,
       }}
       key={uuid()}
       activeStyle={{
@@ -43,8 +38,16 @@ const Category = (props) => {
       onClick={getProducts}
     >
       <CategoryLi>
-      {props.category}
+      {category}
       </CategoryLi>
     </NavLink>)
-}
+};
+Category.propTypes = {
+    category: PropTypes.string,
+    getCurrentCategory: PropTypes.func,
+    getFilteredProducts: PropTypes.func,
+    getSearchedProducts: PropTypes.func,
+    getSearchValue: PropTypes.func,
+    search: PropTypes.string
+};
 export default Category;

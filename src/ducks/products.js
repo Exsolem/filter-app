@@ -1,4 +1,5 @@
 import {put, call, takeLatest} from 'redux-saga/effects';
+import slugify from 'slugify'
 
 //Action types
 
@@ -18,9 +19,9 @@ const initialState = {
     errorOccurred: false,
     products: [],
     filteredProducts: [],
-    searchedProducts:[],
+    searchedProducts: [],
     categories: [],
-    search: [],
+    search: '',
     currentCategory: ''
 };
 
@@ -64,14 +65,14 @@ const getCurrentCategory = (category) => {
 
 };
 
-export const  reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case LOADING_PRODUCTS:
-            return{
+            return {
                 ...state,
                 isLoading: true
-            }
-        case REQUESTED_PRODUCTS:{
+            };
+        case REQUESTED_PRODUCTS: {
             return {
                 ...state,
                 products: action.payload.products,
@@ -86,47 +87,46 @@ export const  reducer = (state = initialState, action) => {
                 errorOccurred: true
             };
         case GET_CATEGORIES: {
-            let  categories = [];
-            [...state.products].forEach( item => {
-                if(categories.indexOf(item.bsr_category) === -1){
-                    categories.push(item.bsr_category)
+            let categories = ['All Products'];
+            [...state.products].forEach(item => {
+                const category = item.bsr_category;
+                if (categories.indexOf(category) === -1) {
+                    categories.push(category)
                 }
             });
-            return {...state, categories};
+            return {...state, categories };
 
         }
         case GET_FILTERED_PRODUCTS: {
             const filteredProducts = [...state.products]
-                .filter(item => item.bsr_category === state.currentCategory)
-
-            return {...state,
-                filteredProducts,
+                        .filter(item => slugify(item.bsr_category.toLowerCase()) === state.currentCategory || state.currentCategory === 'all-products');
+            return {
+                ...state,
+                filteredProducts
             }
         }
-        case GET_SEARCH_VALUE:{
-            return { ...state, search: action.payload.toLowerCase() }
+        case GET_SEARCH_VALUE: {
+            return {...state, search: action.payload.toLowerCase()}
         }
-        case GET_CURRENT_CATEGORY:{
-            const currentCategory = action.payload.replace('/', '');
-            return { ...state, currentCategory }
+        case GET_CURRENT_CATEGORY: {
+            const currentCategory = slugify(action.payload.toLowerCase());
+            return {...state, currentCategory}
         }
         case GET_SEARCHED_PRODUCTS: {
             let searchedProducts = [];
-            if(state.currentCategory){
-                [...state.filteredProducts].forEach( product => {
+            if (state.currentCategory && state.currentCategory !== 'all-products') {
+                [...state.filteredProducts].forEach(product => {
                     const name = product.name.toLowerCase();
-                    console.log(state.search);
                     const search = state.search;
-                    if(name.indexOf(search) >= 0){
+                    if (name.indexOf(search) >= 0) {
                         searchedProducts.push(product)
                     }
                 })
-            }
-            else{
-                [...state.products].forEach( product => {
+            } else {
+                [...state.products].forEach(product => {
                     const name = product.name.toLowerCase();
-                    const search = state.search.toLowerCase() ;
-                    if(name.indexOf(search) >= 0){
+                    const search = state.search;
+                    if (name.indexOf(search) >= 0) {
                         searchedProducts.push(product)
                     }
                 })
@@ -143,7 +143,7 @@ export const  reducer = (state = initialState, action) => {
 
 //Connect dispatch and state
 
-export const mapStateToProps = ({products,isLoading,errorOccurred, filteredProducts, categories, search, currentCategory, searchedProducts }) => {
+export const mapStateToProps = ({ products, isLoading, errorOccurred, filteredProducts, categories, search, currentCategory, searchedProducts }) => {
     return {
         products,
         isLoading,
@@ -172,9 +172,9 @@ export function* watchFetchProducts() {
 
 export function* fetchProductsAsync() {
     try {
-        yield put(loadingProducts())
+        yield put(loadingProducts());
         const data = yield call(() => {
-                return fetch('https://demo8421975.mockable.io/products')
+                return fetch('../products.json')
                     .then(res => res.json());
             }
         );
