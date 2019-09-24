@@ -2,9 +2,10 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import uuid from 'uuid'
 import queryString from 'query-string'
-import {CategoryLi} from '../../styled/styledComponents'
 import PropTypes from 'prop-types'
 import slugify from "slugify";
+
+import {CategoryLi} from '../../styled/styledComponents'
 
 
 const Category = ({category, getCurrentCategory, getFilteredProducts, getSearchedProducts, getSearchValue, search}) => {

@@ -22,11 +22,14 @@ export const AppContainer = styled.div`
   -moz-osx-font-smoothing: grayscale;
 }
 `;
+AppContainer.displayName = 'AppContainer';
 
 export const AppDiv = styled.div`
   display: flex;
   flex-flow: row nowrap;
 `;
+AppDiv.displayName = 'AppDiv';
+
 export const AppMenu = styled.menu`
   display: flex;
   flex-flow: column nowrap;
@@ -40,24 +43,50 @@ export const AppMenu = styled.menu`
   margin: 0;
   height:15vh;
 `;
+AppMenu.displayName = 'AppMenu';
+
 export const AppImg = styled.img`
 position: absolute;
 border-radius: 50%;
 top: 40%;
 left: 40%;
 `;
+AppImg.displayName = 'AppImg';
+
 export const ProductsDiv = styled.div`
     display: flex;
     flex-flow: column nowrap;
 `;
+ProductsDiv.displayname = 'ProductsDiv';
+
 export const ProductsUl = styled.ul`
     margin: 0;
     padding: 0;
 `;
-export const ProductSpan = styled.span`
-    font-size: 2.5vmin;   
+ProductsUl.dispayName = 'ProductsUl';
+
+export const ProductName = styled.span`
+    font-size: 2.5vmin;
+    line-height: 70%;   
     color: black;
+    @media (max-width: 575px) {
+    font-size: 2.5vmax;
+    padding: 10px;
+  }
 `;
+ProductName.displayName = 'ProductName';
+
+export const ProductPrice = styled.span`
+    font-size: 2.5vmin;
+    line-height: 70%;   
+    color: black;
+    @media (max-width: 575px) {
+    font-size: 2.5vmax;
+    padding: 10px;
+  }
+`;
+ProductPrice.displayName = 'ProductPrice';
+
 export const ProductLi = styled.li`
     display: flex;
     flex-flow: row nowrap;
@@ -70,9 +99,13 @@ export const ProductLi = styled.li`
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 2vmin;
 `;
+ProductLi.displayName = 'ProductLi';
+
 export const ProductImg = styled.img`
-    max-width: 25vmin;  
+    max-width: 30vmin;  
 `;
+ProductImg.displayName = 'ProductImg';
+
 export const CategoryLi = styled.li`
   text-align: left;
   border: 1px solid black;
@@ -86,3 +119,4 @@ export const CategoryLi = styled.li`
     color: #dfe3e6;
   };
 `;
+CategoryLi.displayName = 'CategoryLi';

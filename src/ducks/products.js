@@ -94,19 +94,21 @@ export const reducer = (state = initialState, action) => {
                     categories.push(category)
                 }
             });
-            return {...state, categories };
+            return {...state, categories};
 
         }
         case GET_FILTERED_PRODUCTS: {
             const filteredProducts = [...state.products]
-                        .filter(item => slugify(item.bsr_category.toLowerCase()) === state.currentCategory || state.currentCategory === 'all-products');
+                .filter(item => slugify(item.bsr_category
+                        .toLowerCase()) ===
+                            state.currentCategory || state.currentCategory === 'all-products');
             return {
                 ...state,
                 filteredProducts
             }
         }
         case GET_SEARCH_VALUE: {
-            return {...state, search: action.payload.toLowerCase()}
+            return {...state, search: action.payload}
         }
         case GET_CURRENT_CATEGORY: {
             const currentCategory = slugify(action.payload.toLowerCase());
@@ -117,7 +119,7 @@ export const reducer = (state = initialState, action) => {
             if (state.currentCategory && state.currentCategory !== 'all-products') {
                 [...state.filteredProducts].forEach(product => {
                     const name = product.name.toLowerCase();
-                    const search = state.search;
+                    const search = state.search.toLowerCase();
                     if (name.indexOf(search) >= 0) {
                         searchedProducts.push(product)
                     }
@@ -125,7 +127,7 @@ export const reducer = (state = initialState, action) => {
             } else {
                 [...state.products].forEach(product => {
                     const name = product.name.toLowerCase();
-                    const search = state.search;
+                    const search = state.search.toLowerCase();
                     if (name.indexOf(search) >= 0) {
                         searchedProducts.push(product)
                     }
@@ -143,7 +145,9 @@ export const reducer = (state = initialState, action) => {
 
 //Connect dispatch and state
 
-export const mapStateToProps = ({ products, isLoading, errorOccurred, filteredProducts, categories, search, currentCategory, searchedProducts }) => {
+export const mapStateToProps = ({
+    products, isLoading, errorOccurred, filteredProducts, categories, search, currentCategory, searchedProducts
+}) => {
     return {
         products,
         isLoading,
@@ -173,11 +177,7 @@ export function* watchFetchProducts() {
 export function* fetchProductsAsync() {
     try {
         yield put(loadingProducts());
-        const data = yield call(() => {
-                return fetch('../products.json')
-                    .then(res => res.json());
-            }
-        );
+        const data = yield call(() => fetch('../products.json').then(res => res.json()));
         yield put(requestProducts(data));
         yield put(getCategories())
     } catch (error) {

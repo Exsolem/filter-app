@@ -1,24 +1,25 @@
 import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap'
-import {ProductImg, ProductLi, ProductSpan} from "../../styled/styledComponents";
 import PropTypes from 'prop-types'
+import uuid from 'uuid'
 
-const Product = ({index, product: {img, price, name}}) => {
+import {ProductImg, ProductLi, ProductPrice, ProductName} from "../../styled/styledComponents";
+
+const Product = ({ product: { img, price, name } }) => {
 
     return <Container style={{margin: 0, padding: 0}}>
-        <Row>
-            <Col>
-                <ProductLi key={index}>
-                    <Col md={4}><ProductImg src={img} alt="product"/></Col>
-                    <Col md={2}> <ProductSpan>{price} GBP</ProductSpan></Col>
-                    <Col md={6}> <ProductSpan>{name}</ProductSpan></Col>
+        <Row >
+            <Col  xs sm md={12} lg>
+                <ProductLi key={uuid()} className='flex-column flex-sm-row flex-md-row justify-content-between'>
+                    <Col xs={12} sm={5} md={5} ><ProductImg src={img} alt="product"/></Col>
+                    <Col xs={12}  sm={1} md={2}> <ProductPrice>{price} GBP</ProductPrice></Col>
+                    <Col  xs={12}  sm={6} md={5}> <ProductName>{name}</ProductName></Col>
                 </ProductLi>
             </Col>
         </Row>
     </Container>
 };
 Product.propsTypes = {
-    index: PropTypes.number,
     img: PropTypes.string,
     price: PropTypes.string,
     name: PropTypes.string,

@@ -4,14 +4,12 @@ import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 
-const Search = ({getSearchValue, getSearchedProducts, history:{push, location:{pathname}}}) => {
+export const Search = ({search, getSearchValue, getSearchedProducts, history:{push, location:{pathname}}}) => {
     const inputHandler = (e) => {
-        const input = e.target.value.toLowerCase();
-        getSearchValue(input);
+        getSearchValue(e.target.value);
         getSearchedProducts();
-
         if (e.target.value) {
-            push(`${pathname}?search=${e.target.value} `);
+            push(`${pathname}?search=${e.target.value}`);
         } else {
             push(`${pathname}`)
         }
@@ -22,10 +20,11 @@ const Search = ({getSearchValue, getSearchedProducts, history:{push, location:{p
                            margin: '2vmin 0',
                            padding: 0
                        }}>
-        <FormControl onInput={inputHandler} />
+        <FormControl onChange={inputHandler} value={search}/>
     </InputGroup>
 };
 Search.propTypes = {
+    search: PropTypes.string,
     pathname: PropTypes.string,
     getSearchValue: PropTypes.func,
     getSearchedProducts: PropTypes.func,
