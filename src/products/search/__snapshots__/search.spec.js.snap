@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search Search initial renders properly 1`] = `
+"<InputGroup className=\\"mb-12\\" style={{...}}>
+  <FormControl onChange={[Function: inputHandler]} value=\\"searchValue\\" />
+</InputGroup>"
+`;

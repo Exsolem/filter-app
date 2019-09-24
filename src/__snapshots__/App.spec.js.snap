@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App App initial renders properly 1`] = `
+"<AppContainer className=\\"col-lg-12\\">
+  <BrowserRouter>
+    <AppDiv>
+      <AppMenu>
+        <withRouter(CategoriesList) currentCategory=\\"\\" categories={{...}} search=\\"\\" getSearchValue={[undefined]} getCurrentCategory={[undefined]} getFilteredProducts={[undefined]} getSearchedProducts={[undefined]} />
+      </AppMenu>
+      <Route path=\\"/\\" render={[Function: render]} />
+    </AppDiv>
+  </BrowserRouter>
+</AppContainer>"
+`;
+
+exports[`App Products is loaded with error renders properly 1`] = `
+"<AppContainer className=\\"col-lg-12\\">
+  <BrowserRouter>
+    <AppDiv>
+      <AppMenu>
+        <withRouter(CategoriesList) currentCategory=\\"\\" categories={{...}} search=\\"\\" getSearchValue={[undefined]} getCurrentCategory={[undefined]} getFilteredProducts={[undefined]} getSearchedProducts={[undefined]} />
+      </AppMenu>
+      <p>
+        Error, try again
+      </p>
+    </AppDiv>
+  </BrowserRouter>
+</AppContainer>"
+`;
+
+exports[`App Products is loading renders properly 1`] = `
+"<AppContainer className=\\"col-lg-12\\">
+  <BrowserRouter>
+    <AppDiv>
+      <AppMenu>
+        <withRouter(CategoriesList) currentCategory=\\"\\" categories={{...}} search=\\"\\" getSearchValue={[undefined]} getCurrentCategory={[undefined]} getFilteredProducts={[undefined]} getSearchedProducts={[undefined]} />
+      </AppMenu>
+      <AppImg src=\\"https://i.pinimg.com/originals/3f/2c/97/3f2c979b214d06e9caab8ba8326864f3.gif\\" alt=\\"loader\\" />
+    </AppDiv>
+  </BrowserRouter>
+</AppContainer>"
+`;
+
+exports[`App Products loading is success renders properly 1`] = `
+"<AppContainer className=\\"col-lg-12\\">
+  <BrowserRouter>
+    <AppDiv>
+      <AppMenu>
+        <withRouter(CategoriesList) currentCategory=\\"\\" categories={{...}} search=\\"\\" getSearchValue={[undefined]} getCurrentCategory={[undefined]} getFilteredProducts={[undefined]} getSearchedProducts={[undefined]} />
+      </AppMenu>
+      <Route path=\\"/\\" render={[Function: render]} />
+    </AppDiv>
+  </BrowserRouter>
+</AppContainer>"
+`;
