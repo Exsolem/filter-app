@@ -4,7 +4,7 @@ import {shallow} from 'enzyme'
 import Product  from './product'
 
 
-describe('Search', () => {
+describe('Product', () => {
     const props = {
         product: {
             img: 'product/img/url',

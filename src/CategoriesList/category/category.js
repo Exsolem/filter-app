@@ -15,7 +15,7 @@ const Category = ({category, getCurrentCategory, getFilteredProducts, getSearche
         getFilteredProducts();
         getSearchedProducts();
     };
-    if (search.length > 0) {
+    if (search !== '' && search.length >= 1) {
         let newSearch = queryString.parse(search);
         getSearchValue(newSearch.search);
     }

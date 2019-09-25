@@ -77,12 +77,13 @@ export const ProductName = styled.span`
 ProductName.displayName = 'ProductName';
 
 export const ProductPrice = styled.span`
-    font-size: 2.5vmin;
+    font-size: 3vmin;
     line-height: 70%;   
     color: black;
+    font-weight: bold;
     @media (max-width: 575px) {
     font-size: 2.5vmax;
-    padding: 10px;
+    margin: 2vmax;
   }
 `;
 ProductPrice.displayName = 'ProductPrice';
@@ -92,9 +93,6 @@ export const ProductLi = styled.li`
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px 0px 0.5vmin 0.1vmin black;
-    min-heigth: 30vh;
-    padding: 1vmin  0;
     margin-bottom: 1vmin;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 2vmin;
@@ -102,7 +100,13 @@ export const ProductLi = styled.li`
 ProductLi.displayName = 'ProductLi';
 
 export const ProductImg = styled.img`
-    max-width: 30vmin;  
+    max-width: 40vmin;  
+    padding: 0;
+    border-radius: 1vmin;
+    @media (max-width: 575px) {
+        margin-bottom: 1vmax;
+        max-width: 50vmin;  
+    }
 `;
 ProductImg.displayName = 'ProductImg';
 

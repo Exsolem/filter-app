@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-
 import Product from './product/product';
 import Search from './search/search'
 import {ProductsDiv, ProductsUl} from "../styled/styledComponents";
@@ -13,11 +12,11 @@ export const Products = ({
     // TODO: move to a separate func
     const showProductsList = () => {
         if (search.length !== 0) {
-           return searchedProducts.map(product => <Product  product={product}/>);
+           return searchedProducts.map((product, index) => <Product key={index} product={product}/>);
         } else if (filteredProducts.length > 0) {
-            return filteredProducts.map(product => <Product  product={product}/>);
+            return filteredProducts.map((product, index) => <Product key={index} product={product}/>);
         } else {
-            return products.map(product => <Product  product={product}/>);
+            return products.map((product, index) => <Product key={index} product={product}/>);
         }
     };
 

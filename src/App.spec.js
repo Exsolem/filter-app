@@ -25,7 +25,7 @@ describe('App', () => { // групируем с помощью describe все 
         });
         it('dispatches the `fetchProducts()` method it receives from props', () => {
             expect(mockFetchProducts).toHaveBeenCalled() // создали ожидание с нужным ассертом
-        })
+        });
         it('not rendered products', () => {
             expect(app.find('Products')).toHaveLength(0);
         });

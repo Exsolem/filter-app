@@ -5,3 +5,11 @@ exports[`Category product initial renders properly 1`] = `
   <CategoryLi />
 </NavLink>"
 `;
+
+exports[`Category product initial renders properly 2`] = `
+"<NavLink to={{...}} activeStyle={{...}} style={{...}} onClick={[Function: getProducts]}>
+  <CategoryLi>
+    category
+  </CategoryLi>
+</NavLink>"
+`;
