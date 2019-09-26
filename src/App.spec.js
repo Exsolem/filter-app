@@ -1,10 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import toJson from 'enzyme-to-json'
 
 import  { App } from './App'
 
-describe('App', () => { // групируем с помощью describe все тесты для контейнера News
-    const mockFetchProducts = jest.fn() // создали mock-функцию
+describe('App', () => {
+    const mockFetchProducts = jest.fn()
     const props = {
         isLoading: false,
         loadSuccess: false,
@@ -21,10 +22,10 @@ describe('App', () => { // групируем с помощью describe все 
     describe('App initial', () => {
         const app = shallow(<App {...props}/>);
         it('renders properly', () => {
-            expect(app.debug()).toMatchSnapshot()
+            expect(toJson(app)).toMatchSnapshot()
         });
         it('dispatches the `fetchProducts()` method it receives from props', () => {
-            expect(mockFetchProducts).toHaveBeenCalled() // создали ожидание с нужным ассертом
+            expect(mockFetchProducts).toHaveBeenCalled()
         });
         it('not rendered products', () => {
             expect(app.find('Products')).toHaveLength(0);
@@ -40,7 +41,7 @@ describe('App', () => { // групируем с помощью describe все 
         };
         const app = shallow(<App {...nextProps} />);
         it('renders properly', () => {
-            expect(app.debug()).toMatchSnapshot()
+            expect(toJson(app)).toMatchSnapshot()
         });
         it('render loader', () => {
             expect(app.find('AppImg')).toHaveLength(1);
@@ -59,7 +60,7 @@ describe('App', () => { // групируем с помощью describe все 
         };
         const app = shallow(<App {...nextProps} />);
         it('renders properly', () => {
-            expect(app.debug()).toMatchSnapshot()
+            expect(toJson(app)).toMatchSnapshot()
         });
         it('renders error', () => {
             expect(app.find('p').text()).toEqual('Error, try again');
@@ -79,7 +80,7 @@ describe('App', () => { // групируем с помощью describe все 
         };
         const app = shallow(<App {...nextProps} />);
         it('renders properly', () => {
-            expect(app.debug()).toMatchSnapshot()
+            expect(toJson(app)).toMatchSnapshot()
         });
         it('rendered Products', () => {
             expect(app.find('Products')).toHaveLength(0)
