@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { mapStateToProps, mapDispatchToProps } from './ducks/products'
 import { AppContainer, AppDiv, AppImg, AppMenu } from "./styled/styledComponents"
 import Products from './products/products'
-import CategoriesList from "./categoriesList/categoriesList";
+import CategoriesList from "./CategoriesList/categoriesList";
 
 
 export class App extends React.Component {
